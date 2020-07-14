@@ -37,7 +37,6 @@ class RSLifecycleSpec extends GebSpec {
   GrailsWebDataBinder grailsWebDataBinder
   HibernateDatastore hibernateDatastore
   DataSource dataSource
-  GlobalConfigService globalConfigService
 
   static Map request_data = [:];
 
@@ -134,32 +133,17 @@ class RSLifecycleSpec extends GebSpec {
       services:[
         [
           slug:'Allegheny_College_ISO18626',
-          service:[ 'name':'ReShare ISO18626 Service', 'address':"${baseUrl}/rs/iso18626", 'type':'ISO18626', 'businessFunction':'ILL' ],
+          service:[ 'name':'ReShare ISO18626 Service', 'address':"${baseUrl}/rs/externalApi/iso18626", 'type':'ISO18626', 'businessFunction':'ILL' ],
           customProperties:[ 'ILLPreferredNamespaces':['RESHARE', 'PALCI', 'IDS'] ]
         ]
       ]
     ]
     'TestTenantH' | [ id:'RS-T-D-0002', name: 'The New School', slug:'THE_NEW_SCHOOL', symbols: [[ authority:'OCLC', symbol:'PPPA', priority:'a'] ]]
-    'TestTenantG' | [ id:'RS-T-D-0001', name: 'Allegheny College', slug:'Allegheny_College', symbols: [[ authority:'OCLC', symbol:'AVL', priority:'a'] ], services:[ [ slug:'Allegheny_College_ISO18626', service:[ 'name':'ReShare ISO18626 Service', 'address':"${baseUrl}/rs/iso18626", 'type':'ISO18626', 'businessFunction':'ILL' ], customProperties:[ 'ILLPreferredNamespaces':['RESHARE', 'PALCI', 'IDS'] ] ] ] ]
+    'TestTenantG' | [ id:'RS-T-D-0001', name: 'Allegheny College', slug:'Allegheny_College', symbols: [[ authority:'OCLC', symbol:'AVL', priority:'a'] ], 
+                      services:[ [ slug:'Allegheny_College_ISO18626', 
+                                   service:[ 'name':'ReShare ISO18626 Service', 'address':"${baseUrl}/rs/externalApi/iso18626", 'type':'ISO18626', 'businessFunction':'ILL' ], 
+                      customProperties:[ 'ILLPreferredNamespaces':['RESHARE', 'PALCI', 'IDS'] ] ] ] ]
     'TestTenantG' | [ id:'RS-T-D-0002', name: 'The New School', slug:'THE_NEW_SCHOOL', symbols: [[ authority:'OCLC', symbol:'PPPA', priority:'a'] ]]
-  }
-
-  void "set Up Shared Data"(symbol, tenant_id) {
-
-    logger.debug("Set up shared data");
-
-    when:"We register the data mapping symbols to tenants"
-     globalConfigService.registerSymbolForTenant(symbol, tenant_id);
-      
-    then:"We are able to resolve which tenant a symbol should be routed to"
-      assert tenant_id == globalConfigService.getTenantForSymbol(symbol)
-
-    where:
-      symbol|tenant_id
-      'OCLC:AVL'|'TestTenantH'
-      'OCLC:ZMU'|'TestTenantG'
-      'RESHARE:TU01'|'TestTenantG'
-      'RESHARE:TU01'|'TestTenantG'
   }
 
   void "test settings interface - set symbol RESHARE:wibble for tenant TestTenantH"() {

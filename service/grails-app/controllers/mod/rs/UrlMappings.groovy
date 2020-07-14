@@ -35,18 +35,11 @@ class UrlMappings {
     "/rs/kiwt/config/schema/embedded/$type" (controller: 'reshareConfig' , action: "schemaEmbedded")
     "/rs/kiwt/raml" (controller: 'reshareConfig' , action: "raml")
 
-    "/rs/settings/tenantSymbols" (controller: 'reshareSettings', action: 'tenantSymbols');
     "/rs/settings/worker" (controller: 'reshareSettings', action: 'worker');
     "/rs/settings/appSettings" (resources: 'setting');
 
-    "/rs/iso18626" (controller: 'iso18626', action: 'index');
-
-
      // Call /rs/custprop  to list all custom properties
     '/rs/custprops'(resources: 'customPropertyDefinition')
-
-    '/rs/iso18626'(controller:'iso18626', action:'index')
-    "/rs/status/$symbol"(controller:'iso18626', action:'status')
 
     "500"(view: '/error')
     "404"(view: '/notFound')

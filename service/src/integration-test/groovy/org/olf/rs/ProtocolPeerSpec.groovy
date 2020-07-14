@@ -36,7 +36,6 @@ class ProtocolPeerSpec extends GebSpec {
   GrailsWebDataBinder grailsWebDataBinder
   HibernateDatastore hibernateDatastore
   DataSource dataSource
-  GlobalConfigService globalConfigService
 
   static Map request_data = [:];
 
@@ -101,7 +100,7 @@ class ProtocolPeerSpec extends GebSpec {
         [ authority:'OCLC', symbol:'AVL', priority:'a'] ],
       services:[
         [
-          service:[ "name":"ReShare ISO18626 Service", "address":"http://localhost:8080/rs/iso18626", "type":"ISO18626", "businessFunction":"ILL" ],
+          service:[ "name":"ReShare ISO18626 Service", "address":"http://localhost:8080/rs/externalApi/iso18626", "type":"ISO18626", "businessFunction":"ILL" ],
           customProperties:[ "ILLPreferredNamespaces":["RESHARE", "PALCI", "IDS"] ]
         ]
       ]
@@ -110,22 +109,6 @@ class ProtocolPeerSpec extends GebSpec {
   }
 
 
-
-  void "set Up Shared Data"(symbol, tenant_id) {
-
-    logger.debug("Set up shared data");
-
-    when:"We register the data mapping symbols to tenants"
-     globalConfigService.registerSymbolForTenant(symbol, tenant_id);
-      
-    then:"We are able to resolve which tenant a symbol should be routed to"
-      assert tenant_id == globalConfigService.getTenantForSymbol(symbol)
-
-    where:
-      symbol|tenant_id
-      'OCLC:PPPA'|'PPTestTenantH'
-      'OCLC:PPPB'|'PPTestTenantG'
-  }
 
   void "Delete the tenants"(tenant_id, note) {
 
