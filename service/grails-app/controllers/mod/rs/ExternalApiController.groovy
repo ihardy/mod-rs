@@ -5,7 +5,6 @@ import org.olf.okapi.modules.directory.DirectoryEntry
 import grails.core.GrailsApplication
 import grails.plugins.*
 import grails.converters.JSON
-import org.olf.rs.GlobalConfigService
 import org.olf.rs.BackgroundTaskService;
 import org.olf.rs.ReshareApplicationEventHandlerService
 import grails.gorm.multitenancy.Tenants
@@ -24,7 +23,6 @@ import grails.gorm.multitenancy.CurrentTenant
 class ExternalApiController {
 
   GrailsApplication grailsApplication
-  GlobalConfigService globalConfigService
   ReshareApplicationEventHandlerService reshareApplicationEventHandlerService
 
   def index() {

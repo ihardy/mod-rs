@@ -36,7 +36,7 @@ public class ReshareApplicationEventHandlerService {
   
   ProtocolMessageService protocolMessageService
   ProtocolMessageBuildingService protocolMessageBuildingService
-  GlobalConfigService globalConfigService
+  // GlobalConfigService globalConfigService
   SharedIndexService sharedIndexService
   HostLMSService hostLMSService
   ReshareActionService reshareActionService

@@ -14,7 +14,7 @@ class BootStrap {
 
     Thread.sleep(2000);
     
-    housekeepingService.ensureSharedSchema();
+    // housekeepingService.ensureSharedSchema();
     okapiTenantAdminService.freshenAllTenantSchemas()
   }
 

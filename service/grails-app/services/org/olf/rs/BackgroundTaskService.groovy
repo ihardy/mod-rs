@@ -117,7 +117,7 @@ public class BackgroundTaskService {
 
     log.debug("Checking if okapi context provides us with configuration");
 
-    if ( config_test_count < 0 ) {
+    if ( config_test_count < 5 ) {
       try {
         if (okapiClient?.withTenant().providesInterface("configuration", "^2.0")) {
           log.debug(" -> okapi exposing configuration ^2.0 to us - we can get the email config");

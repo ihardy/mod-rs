@@ -23,7 +23,7 @@ class ProtocolMessageService {
   EventPublicationService eventPublicationService
   def grailsApplication
 
-  GlobalConfigService globalConfigService
+  // GlobalConfigService globalConfigService
   /**
    * @param eventData : A map structured as followed 
    *   event: {
@@ -58,8 +58,8 @@ class ProtocolMessageService {
 
     // The first thing to do is to look in the internal SharedConfig to see if the recipient is a
     // tenant in this system. If so, we can simply call handleIncomingMessage
-    def tenant = globalConfigService.getTenantForSymbol(peer_symbol)
-    log.debug("The tenant for that symbol(${peer_symbol}) is: ${tenant}")
+    // def tenant = globalConfigService.getTenantForSymbol(peer_symbol)
+    // log.debug("The tenant for that symbol(${peer_symbol}) is: ${tenant}")
 
     List<ServiceAccount> ill_services_for_peer = findIllServices(peer_symbol)
     log.debug("ILL Services for peer: ${ill_services_for_peer}")
