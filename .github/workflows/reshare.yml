@@ -1,7 +1,5 @@
-# This workflow will build a Java project with Gradle
-# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-gradle
-
-name: Java CI with Gradle
+# Builds ReShare backend module (mod-rs or mod-directory) for development.
+name: build ReShare backend module
 
 on:
   push:
@@ -13,6 +11,9 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      MODULE_NAME: mod-rs
+      DOCKER_REPO: reshareci
 
     steps:
     - uses: actions/checkout@v2
@@ -26,5 +27,18 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build -x integrationTest 
       working-directory: ./service 
+    - name: Login to Docker Hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Docker build
-      run: docker build -t mod-rs:latest .
+      run: "docker build -t $MODULE_NAME:latest ."
+    - name: Docker tag
+      run: |
+        "docker tag $MODULE_NAME:latest $DOCKER_REPO/$MODULE_NAME:latest"
+        "docker tag $MODULE_NAME:latest $DOCKER_REPO/$MODULE_NAME:$GITHUB_SHA"
+    - name: Docker push
+      run: |
+        "docker push $DOCKER_REPO/$MODULE_NAME:latest"
+        "docker push $MODULE_NAME:latest $DOCKER_REPO/$MODULE_NAME:$GITHUB_SHA"
