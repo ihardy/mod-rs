@@ -26,3 +26,5 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build -x integrationTest 
       working-directory: ./service 
+    - name: Docker build
+      run: docker build -t mod-rs:latest .
