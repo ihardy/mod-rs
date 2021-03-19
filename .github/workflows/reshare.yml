@@ -40,5 +40,5 @@ jobs:
         docker tag $MODULE_NAME:latest $DOCKER_REPO/$MODULE_NAME:$GITHUB_SHA
     - name: Docker push
       run: |
-        docker push $DOCKER_REPO}/$MODULE_NAME:latest
+        docker push $DOCKER_REPO/$MODULE_NAME:latest
         docker push $MODULE_NAME:latest $DOCKER_REPO/$MODULE_NAME:$GITHUB_SHA
