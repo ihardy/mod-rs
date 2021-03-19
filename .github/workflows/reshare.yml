@@ -27,6 +27,8 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Add SHORT_SHA env property with commit short sha
+      run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
     - name: set snapshot version
       run: sed -i -E "s/appVersion=(.*$)/appVersion=\1.$JOB_ID/" service/gradle.properties
     - name: show snapshot version
@@ -41,9 +43,9 @@ jobs:
       run: docker build -t $MODULE_NAME:latest .
     - name: Docker tag
       run: |
+        docker tag $MODULE_NAME:latest $DOCKER_REPO/$MODULE_NAME:$SHORT_SHA
         docker tag $MODULE_NAME:latest $DOCKER_REPO/$MODULE_NAME:latest
-        docker tag $MODULE_NAME:latest $DOCKER_REPO/$MODULE_NAME:$GITHUB_SHA
     - name: Docker push
       run: |
+        docker push $DOCKER_REPO/$MODULE_NAME:$SHORT_SHA
         docker push $DOCKER_REPO/$MODULE_NAME:latest
-        docker push $DOCKER_REPO/$MODULE_NAME:$GITHUB_SHA
