@@ -28,7 +28,7 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: set snapshot version
-      run: sed -i -E "s/appVersion=(.*$)/appVersion=\1.$JOB_ID/" gradle.properties
+      run: sed -i -E "s/appVersion=(.*$)/appVersion=\1.$JOB_ID/" service/gradle.properties
     - name: show snapshot version
       run: cat service/gradle.properties
     - name: Grant execute permission for gradlew
