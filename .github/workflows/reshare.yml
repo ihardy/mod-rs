@@ -33,12 +33,12 @@ jobs:
       run: ./gradlew build -x integrationTest 
       working-directory: ./service 
     - name: Docker build
-      run: "docker build -t $MODULE_NAME:latest ."
+      run: docker build -t $MODULE_NAME:latest .
     - name: Docker tag
       run: |
-        "docker tag ${env.MODULE_NAME}:latest ${env.DOCKER_REPO}/${env.MODULE_NAME}:latest"
-        "docker tag ${env.MODULE_NAME}:latest ${env.DOCKER_REPO}/${env.MODULE_NAME}:${GITHUB_SHA}"
+        docker tag $MODULE_NAME:latest $DOCKER_REPO/$MODULE_NAME:latest
+        docker tag $MODULE_NAME:latest $DOCKER_REPO/$MODULE_NAME:$GITHUB_SHA
     - name: Docker push
       run: |
-        "docker push ${env.DOCKER_REPO}/${env.MODULE_NAME}:latest"
-        "docker push ${env.MODULE_NAME}:latest ${env.DOCKER_REPO}/${env.MODULE_NAME}:${GITHUB_SHA}"
+        docker push $DOCKER_REPO}/$MODULE_NAME:latest
+        docker push $MODULE_NAME:latest $DOCKER_REPO/$MODULE_NAME:$GITHUB_SHA
