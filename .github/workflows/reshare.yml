@@ -31,14 +31,12 @@ jobs:
       run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
     - name: set snapshot version
       run: sed -i -E "s/appVersion=(.*$)/appVersion=\1.$JOB_ID/" service/gradle.properties
-    - name: show snapshot version
-      run: cat service/gradle.properties
     - name: Grant execute permission for gradlew
       run: chmod +x ./gradlew
-      working-directory: ./service 
+      working-directory: ./service
     - name: Build with Gradle
-      run: ./gradlew build -x integrationTest 
-      working-directory: ./service 
+      run: ./gradlew build -x integrationTest
+      working-directory: ./service
     - name: Docker build
       run: docker build -t $MODULE_NAME:latest .
     - name: Docker tag
