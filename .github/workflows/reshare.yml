@@ -15,6 +15,7 @@ jobs:
       MODULE_NAME: mod-rs
       DOCKER_REPO: reshareci
       JOB_ID: ${{ github.run_number }}
+      MD_REGISTRY: https://registry.reshare-dev.indexdata.com
 
     steps:
     - uses: actions/checkout@v2
