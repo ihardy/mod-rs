@@ -53,9 +53,10 @@ jobs:
         docker push $DOCKER_REPO/$MODULE_NAME:latest
       if: github.ref == 'refs/heads/master'
     - name: Post MD
-      run: 'curl -X POST
+      run: >
+        curl -X POST
         -H "Content-Type: application/json"
         -d @service/build/resources/main/okapi/ModuleDescriptor.json
-        $MD_REGISTRY/_/proxy/modules' 
+        $MD_REGISTRY/_/proxy/modules
       if: github.ref == 'refs/heads/master'
 
