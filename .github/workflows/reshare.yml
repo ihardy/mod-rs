@@ -39,7 +39,8 @@ jobs:
       working-directory: ./service
     - name: Build with Gradle
       run: ./gradlew build -x integrationTest
-      working-directory: ./service - name: Docker build
+      working-directory: ./service
+    - name: Docker build
       run: docker build -t $MODULE_NAME:latest .
     - name: Docker tag
       run: |
@@ -52,9 +53,9 @@ jobs:
         docker push $DOCKER_REPO/$MODULE_NAME:latest
       if: github.ref == 'refs/heads/master'
     - name: Post MD
-      run: curl -X POST \
-        -H "Content-Type: application/json" \
-        -d @service/build/resources/main/okapi/ModuleDescriptor.json \
-        $MD_REGISTRY/_/proxy/modules
+      run: 'curl -X POST
+        -H "Content-Type: application/json"
+        -d @service/build/resources/main/okapi/ModuleDescriptor.json
+        $MD_REGISTRY/_/proxy/modules' 
       if: github.ref == 'refs/heads/master'
 
